@@ -1,0 +1,411 @@
+{
+	"info": {
+		"_postman_id": "e6be63a4-96f7-4c2a-9eab-47a0e34d0a34",
+		"name": "SIMPLE BOOKS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27288555",
+		"_collection_link": "https://ndito-ino.postman.co/workspace/ndito-ino-Workspace~911dacaf-67c0-458a-af9b-484681bc1c2c/collection/27288555-e6be63a4-96f7-4c2a-9eab-47a0e34d0a34?action=share&source=collection_link&creator=27288555"
+	},
+	"item": [
+		{
+			"name": "GET REQUEST",
+			"item": [
+				{
+					"name": "single book",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SIMPLEURL}}/books/:bookid",
+							"host": [
+								"{{SIMPLEURL}}"
+							],
+							"path": [
+								"books",
+								":bookid"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "fiction",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "bookid",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get an order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SIMPLEURL}}/orders/:orderId",
+							"host": [
+								"{{SIMPLEURL}}"
+							],
+							"path": [
+								"orders",
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "td9mBpuBWEf733vBk8g95"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list of books",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"The Russian\");\r",
+									"});\r",
+									"pm.test(\"Your test name\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    console.log(jsonData)\r",
+									"    pm.expect(jsonData[0].name).to.eql(\"The Russian\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SIMPLEURL}}/books?limit=1&type=fiction",
+							"host": [
+								"{{SIMPLEURL}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "1"
+								},
+								{
+									"key": "type",
+									"value": "fiction"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all order",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SIMPLEURL}}/orders/",
+							"host": [
+								"{{SIMPLEURL}}"
+							],
+							"path": [
+								"orders",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\",() => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"// pm.test(\"Content-Type is present\", ()=>{\r",
+									"//     pm.response.to.contain(\"application/json\")\r",
+									"// })\r",
+									"pm.test(\"Content-Type is applicarion/json\", function () {\r",
+									" pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json; charset=utf-8\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SIMPLEURL}}/status",
+							"host": [
+								"{{SIMPLEURL}}"
+							],
+							"path": [
+								"status"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"clientName\": \"Faitho\",\r\n   \"clientEmail\": \"rockzy1@yahoo.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SIMPLEURL}}/api-clients/",
+					"host": [
+						"{{SIMPLEURL}}"
+					],
+					"path": [
+						"api-clients",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{url}}/orders",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"bookId\": 1,\r\n    \"customerName\": \"Faith\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SIMPLEURL}}/orders",
+					"host": [
+						"{{SIMPLEURL}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patch order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"customerName\": \"Faith Godfrey\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SIMPLEURL}}/orders/:orderId",
+					"host": [
+						"{{SIMPLEURL}}"
+					],
+					"path": [
+						"orders",
+						":orderId"
+					],
+					"variable": [
+						{
+							"key": "orderId",
+							"value": "td9mBpuBWEf733vBk8g95"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SIMPLEURL}}/orders/:orderId",
+					"host": [
+						"{{SIMPLEURL}}"
+					],
+					"path": [
+						"orders",
+						":orderId"
+					],
+					"variable": [
+						{
+							"key": "orderId",
+							"value": "td9mBpuBWEf733vBk8g95"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "SIMPLEURL",
+			"value": "https://simple-books-api.glitch.me",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "7daf90ed25d03c9aa9b30ee88a183f230c3ab2d0fd58c7c561edaedf4f599769",
+			"type": "string"
+		}
+	]
+}
